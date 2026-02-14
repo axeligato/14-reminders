@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14 Reminders from Me to You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Playfair Display', 'Baskerville', 'Garamond', serif;
+            background: #0a0a0a;
+            color: #f5f5f5;
+            min-height: 100vh;
+            padding: 60px 20px;
+        }
+        
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #333;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+        
+        .title-subtitle {
+            font-size: 0.9em;
+            color: #888;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .ornament {
+            font-size: 1.5em;
+            color: #666;
+            margin: 20px 0;
+        }
+        
+        .countdown-container {
+            display: inline-block;
+            margin: 25px 0 15px 0;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .countdown {
+            font-size: 1.3em;
+            color: #999;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .countdown-number {
+            color: #ffffff;
+            font-size: 1.2em;
+        }
+        
+        .subtitle {
+            max-width: 600px;
+            margin: 30px auto 0 auto;
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #aaa;
+            font-style: normal;
+            font-weight: 300;
+        }
+        
+        .notes-container {
+            padding: 0;
+        }
+        
+        .note-item {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 10px;
+        }
+        
+        .note-item:last-child {
+            border-bottom: none;
+        }
+        
+        .note-header {
+            padding: 20px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .note-header:hover .note-title {
+            color: #ffffff;
+        }
+        
+        .note-title {
+            font-size: 1.15em;
+            color: #d0d0d0;
+            font-style: normal;
+            font-weight: 400;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            transition: color 0.3s ease;
+        }
+        
+        .arrow {
+            font-size: 0.9em;
+            color: #666;
+            transition: transform 0.3s ease, color 0.3s ease;
+            font-style: normal;
+        }
+        
+        .note-header:hover .arrow {
+            color: #999;
+        }
+        
+        .arrow.open {
+            transform: rotate(180deg);
+        }
+        
+        .note-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        
+        .note-content.open {
+            max-height: 500px;
+            padding: 0 0 30px 0;
+        }
+        
+        .quote {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #e8e8e8;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-weight: 300;
+            padding-left: 30px;
+            border-left: 2px solid #333;
+        }
+        
+        .author {
+            text-align: right;
+            color: #888;
+            font-weight: 300;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            padding-right: 30px;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 40px 15px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+                letter-spacing: 2px;
+            }
+            
+            .quote {
+                font-size: 1.1em;
+                padding-left: 20px;
+            }
+            
+            .countdown-container {
+                padding: 12px 20px;
+            }
+            
+            .countdown {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="ornament">❦</div>
+            <h1>14 Reminders from Me to You</h1>
+            <p class="title-subtitle">2 for each year together</p>
+            <div class="ornament">❦</div>
+            <div class="countdown-container">
+                <div class="countdown">
+                    <span class="countdown-number" id="daysSince">0</span> days, 
+                    <span class="countdown-number" id="hoursSince">0</span> hours, 
+                    <span class="countdown-number" id="secondsSince">0</span> seconds since we met
+                </div>
+            </div>
+        </div>
+        
+        <div class="notes-container">
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"Do you still love me?"</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"You know you're in love when you can't fall asleep because reality is finally better than your dreams."</p>
+                    <p class="author">— Dr. Seuss</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"Would you still love me if I was a worm?"</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"I love you not only for what you are, but for what I am when I am with you."</p>
+                    <p class="author">— Roy Croft</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"I'm cold."</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"I will warm you with my body and press my lips to yours."</p>
+                    <p class="author">— Anaïs Nin</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"Can you give me a massage?"</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"Sometimes the most productive thing you can do is relax."</p>
+                    <p class="author">— Mark Black</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"I cried earlier."</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"The soul would have no rainbow had the eyes no tears."</p>
+                    <p class="author">— John Vance Cheney</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"I'm in sensory overload."</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"Let everything happen to you: beauty and terror. Just keep going. No feeling is final."</p>
+                    <p class="author">— Rainer Maria Rilke</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"I'm sick."</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"The art of medicine consists of amusing the patient while nature cures the disease."</p>
+                    <p class="author">— Voltaire</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"Can you get me a tea?"</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"The best way to find yourself is to lose yourself in the service of others."</p>
+                    <p class="author">— Mahatma Gandhi</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"You ate all my biscuits again."</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"Take bread away from me, if you wish… but do not take away your laughter."</p>
+                    <p class="author">— Pablo Neruda</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"Wanna order Chipotle?"</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"Let us eat and drink, for tomorrow we die."</p>
+                    <p class="author">— The Bible</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"Can you feed the cats?"</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"What greater gift than the love of a cat?"</p>
+                    <p class="author">— Charles Dickens</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"The cats woke me up."</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"The smallest feline is a masterpiece."</p>
+                    <p class="author">— Leonardo da Vinci</p>
+                </div>
+            </div>
+            
+            <div class="note-item">
+                <div class="note-header" onclick="toggleNote(this)">
+                    <span class="note-title">"Wanna go with me to...?"</span>
+                    <span class="arrow">▾</span>
+                </div>
+                <div class="note-content">
+                    <p class="quote">"Life is either a daring adventure or nothing at all."</p>
+                    <p class="author">— Helen Keller</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Calculate days, hours, and seconds since we met
+        function updateTimeSince() {
+            const startDate = new Date('2019-02-14T00:00:00');
+            const now = new Date();
+            const diffTime = now - startDate;
+            
+            const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+            
+            document.getElementById('daysSince').textContent = days;
+            document.getElementById('hoursSince').textContent = hours;
+            document.getElementById('secondsSince').textContent = seconds;
+        }
+        
+        // Update immediately and then every second
+        updateTimeSince();
+        setInterval(updateTimeSince, 1000);
+        
+        function toggleNote(header) {
+            const content = header.nextElementSibling;
+            const arrow = header.querySelector('.arrow');
+            
+            // Close all other notes
+            document.querySelectorAll('.note-content').forEach(item => {
+                if (item !== content) {
+                    item.classList.remove('open');
+                }
+            });
+            
+            document.querySelectorAll('.arrow').forEach(item => {
+                if (item !== arrow) {
+                    item.classList.remove('open');
+                }
+            });
+            
+            // Toggle current note
+            content.classList.toggle('open');
+            arrow.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
